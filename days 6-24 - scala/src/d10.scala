@@ -1,3 +1,5 @@
+import scala.io.Source
+
 object d10:
 
   val corruptionScore = Map(
@@ -43,11 +45,12 @@ object d10:
     }
 
   def main(args: Array[String]): Unit =
-    val allLines = util.readAll()
+    val allLines = util.readAllFrom("d10")
     firstAssignment(allLines)
     secondAssignment(allLines)
 
   def firstAssignment(allLines: List[String]): Unit =
+    println(new java.io.File(".").getCanonicalPath)
     println(allLines.map(s => LineState.TryParse(s) match {
       case Corrupted(breakingChar) => corruptionScore(breakingChar)
       case _ => 0
@@ -60,5 +63,4 @@ object d10:
     val incompletionScores = allLines.collect(s => LineState.TryParse(s) match {
       case Incomplete(lineState) => lineState.openerStack.foldLeft(0l)((score, char) => score * 5l + completionScore(closerFor(char)))
     }).sorted
-    println("Incompletion scores: \n" + incompletionScores.mkString("\n"))
     println(incompletionScores(incompletionScores.length / 2))

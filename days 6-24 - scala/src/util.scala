@@ -1,12 +1,10 @@
+import scala.io.Source
 import scala.io.StdIn.readLine
 
 object util:
 
-  def readAll(): List[String] =
-    var lines = List[String]()
-    var l = readLine()
-    while(l != "") {
-      lines = lines.appended(l)
-      l = readLine()
-    }
+  def readAllFrom(path: String): List[String] =
+    val source = Source.fromFile("input/" + path)
+    val lines = source.getLines.toList
+    source.close()
     lines
