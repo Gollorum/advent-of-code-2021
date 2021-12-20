@@ -8,3 +8,6 @@ object util:
     val lines = source.getLines.toList
     source.close()
     lines
+
+  extension [A](a: A)
+    def let[B](f: A => B): B = f(a)
